@@ -1,0 +1,11 @@
+# exclude everything except requirements.txt, src
+/*
+!/src
+!/.gitignore
+!/requirements.txt
+!/.travis.yml
+!/README.md
+
+__pycache__/
+*.pyc
+
