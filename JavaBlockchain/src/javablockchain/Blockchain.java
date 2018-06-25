@@ -51,10 +51,10 @@ public class Blockchain {
         for(i=1; i < this.chain.size(); i++){ //start on 2nd block
             final Block currentBlock = this.chain.get(i);
             final Block previousBlock = this.chain.get(i-1);
-                System.out.println("before checking: ");
-                System.out.println(currentBlock.getHash());
-                System.out.println(currentBlock.calculateHash());
-                System.out.println(); 
+          ///      System.out.println("before checking: ");
+         //       System.out.println(currentBlock.getHash());
+       //         System.out.println(currentBlock.calculateHash());
+       //         System.out.println(); 
                 
            
             if(!(currentBlock.getHash().equals(currentBlock.calculateHash()))){

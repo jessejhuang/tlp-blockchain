@@ -29,7 +29,7 @@ public class JavaBlockchain {
         blockchain.addBlock(getRandomData());
         blockchain.print();
         if(blockchain.validate() == true){
-            System.out.println("All good! Keep on minin'!");
+            System.out.println("Validation Complete! All good, keep on minin'!");
         }
         else{
             System.out.println("ERROR: BLOCKCHAIN IS CORRUPTED");
