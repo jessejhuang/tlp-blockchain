@@ -1,7 +1,7 @@
 from blockchain.block import Block
-from blockchain.node import Node
+from blockchain.node import Node 
 
-def test_is_valid():
+def test_chain_is_valid():
     a = Node(0)
     b = Node(1, original=a)
     valid_block = Block("Foo", b.last_hash)

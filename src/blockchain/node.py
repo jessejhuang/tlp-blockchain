@@ -1,5 +1,6 @@
 import copy
 import random
+import requests
 
 from blockchain.block import Block, compute_hash
 
@@ -8,11 +9,13 @@ class Node:
         """ Create node from scratch or from another node"""
         self.index = index
         self.chain = []
+        self.peers = []
         if original is None:
             self.chain.append(Block())
             self.last_hash = self.chain[-1].hash
         else:
             self.chain = self.copy_chain(original)
+            self.peers = original.peers
             self.last_hash = original.last_hash
     
     def copy_chain(self, node):
@@ -21,6 +24,12 @@ class Node:
             chain.append(Block(block.data, block.prev_hash, block.timestamp))
         return chain
         
+    def request_peers(self, url):
+        post_url = url + '/peers'
+        response = requests.post(post_url)
+        self.peers = response.text
+        print(self.peers)
+
     def is_valid(self, node):
         """ Check if a node's chain is valid by by checking against hashes of own chain"""
         if len(node.chain) < len(self.chain):

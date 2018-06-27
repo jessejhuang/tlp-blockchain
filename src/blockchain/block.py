@@ -9,7 +9,7 @@ class Block:
             self.timestamp = str(time.time())
         else:
             self.timestamp = str(timestamp)
-        self.hash      = compute_hash(self)
+        self.hash = compute_hash(self)
 
 def compute_hash(block):
     return hashlib.sha512(

@@ -1,0 +1,3 @@
+[
+  "tests/test_valid.py::test_chain_is_valid"
+]
