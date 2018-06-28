@@ -1,5 +1,5 @@
 from flask import Flask, g, jsonify, render_template, request, url_for
-from blockchain.node import Node
+from node import Node 
 
 app = Flask(__name__)
 
