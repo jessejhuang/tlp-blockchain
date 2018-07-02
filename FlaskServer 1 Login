@@ -1,0 +1,33 @@
+#Instructions to log into flask server:
+
+1. Download or copy private key into a directory you like (it is called id_rsa_
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEA16Gun7gP1nfxsxFVUHJXnEA3KG5Pg0QV6Wxzr1TjRfwUGQzA
+UE9YjRxojMpp43CIwTnavm9XfGBpOr+nenWSuJElZKKHHG316LkYg9YTp71nKQYe
+W2vjcNHi7BeHieKeaoHUdA8LtxCs2wgARtNw0yskMtqy77Ru5ochGsDhdAam87wQ
+387nmYTKm7mOR1FY7n/Pj+dXiG3/yYVxIX5TYB4QKaXKS8sqpb4GjwvlKdsv9Fp2
+hxWg90zltLRV+vEN7TgjVnMy3DHLOknbO71mFGaxAgqdb+W/YX5GOSFwS8xXto8d
+Y+sWE2bBaiBQrqYA+huehbj9ji+Ql4hvIx3fAQIDAQABAoIBAHoQaZS6kiSbM3Rl
+rIDkqVmnNFIr19D7+tdvcDFhgWJ9pzbi8/7CW+NNoJWKg9SfQJr5UC2bQ9ABl7AN
+DBaTdeILMDq+knNyf9Ek7o664deDrWEYuJiSA2c7ORTi4PQaGAk8w3KLjdsskl1P
+MzDkwqqXcl9jVAXDgz/2YLQPWdDeZNLXAj82lnLLwASD0RhklkHx3M8ELHy42HyL
+ISsuJJCxF7xhthgS32QjkeDq+a+Z6deQQIp6tX7qiAVTRBgPOvZa9EIWvvVvG4Uq
+UejHV9gKete3r49WdogNhb3MJdyH5Xp2wwLzNMMxHfSZOtpqjXY/Pm1rKejWBZ5P
+PvMhtAECgYEA9sVy6KjMH170FdzPv0WjY1o2pxgjjh3WMO+Z3UNbrqH+Lkrb7C3/
+f6PaBlvrfVPG9wwLcJqblmxYWMkZyxwh9kLy+kjHe30dMpLD4vfXbtEsIt2gMx/1
+01ty1KkOdRtOZj6UgfHbBogqCFlhitWRnHUPv2wyPjwLsZK+UOXxbSECgYEA37Ib
+OFxEf109GfW2AnR0/dXd63f40DUHhJ7QRkUb0ht/ORMwAUFHJ8R9mtQiy8A4mvdv
+D60KAzCCxPBwXS4goMl0MlBCmCxXSFoWZxe/WLxdLrpxFgsx18m07VdIvrkTCM93
+2OHei4dOBXZaZxDVIU+HSdMRkYXFEc+IYfGRVeECgYBBl8IvbY60V/zxQrxFzzDa
+28PjLltlDzE72LRBSAI6rPxvOZ6zbJaZSuhNAGnb6kTcrersh2wL08i38NxWTKgK
+WUlUlbvQazUzmCdRUSeGYTsmGVrXvAsPnyMqu7UIE7YHH2NCFxNs7QyfI4L18EbA
+G62P6CaCvFsvXB4SSsydgQKBgBHNuxzhOxJn+VT3mWTYn/cT7nWvNr5beh20Bh+R
+oIU4awe/3zI6X89qdBS+jYZp5hdvWgeFXiai1cWW3VqNMUuavQTEHoi9/rRjdyT9
+Xt1RIJl3fUij23OxOhUpvUBwunMZEBDS6UNxoWQN52QMkunzynC1u9A5NVYVjmU9
+NLQBAoGBALuU7ejN+ZlD/AqAoaqI6vbz5e1YHmVaGgxzLDwgA+TS7mIyWElqBmFa
+ZOzZSTJ+bpp+iC1z+kiMcxuPc2U/9acf1NYdIIPpgVO6+ovGH+huYoypPw5HJgjn
+d0+8gzL0/uFlbgKiLMUlM5BpJxowqHNNUzymPb6COz8E4py0kS5n
+-----END RSA PRIVATE KEY-----
+
+2. login with Git Bash or linux shell with: ssh (firstname)(lastname)@67.205.135.0
+Example: ssh bradenrucinski@67.205.135.0
