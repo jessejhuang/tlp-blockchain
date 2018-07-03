@@ -1,5 +1,5 @@
 from flask import Flask, g, jsonify, render_template, request, url_for
-from node import Node 
+from node import Node
 
 app = Flask(__name__)
 
@@ -9,9 +9,9 @@ def connect_to_network():
     origin_url = 'http://174.138.127.161:5000'
     print("FOOOO")
     node = getNode()
-    print("BAR")
     if str(request.base_url) != origin_url:
         node.request_peers(origin_url)
+        print("BAR")
         setNode(node)
 
 

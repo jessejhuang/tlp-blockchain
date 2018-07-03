@@ -5,6 +5,8 @@
 !/requirements.txt
 !/.travis.yml
 !/README.md
+!/.pylintrc
+!/.flaskenv
 
 __pycache__/
 *.pyc
