@@ -1,2 +1,2 @@
 FLASK_ENV=development
-FLASK_APP=src/blockchain
+FLASK_APP=src/blockchain/app
