@@ -36,18 +36,6 @@ class Node:
         for block in node.chain:
             self.chain.append(Block(block.data, block.prev_hash, block.timestamp))
 
-    def request_peers(self, url):
-        '''
-        Make a POST request to the url of another node
-
-        The other node should return a list() of urls of other valid nodes
-        Args:
-            url (str): URL of other node
-        '''
-        post_url = url + '/peers'
-        response = requests.post(post_url)
-        self.peers = response.text
-        print(self.peers)
 
     def is_valid(self, node):
         '''
