@@ -2,6 +2,8 @@
 Flask Server
 
 Manages a single node object and handles incoming requests from other nodes
+
+Usage: flask run
 '''
 import threading
 import time
@@ -10,7 +12,6 @@ from flask import Flask
 import database as db
 from environment import ORIGIN_IP, PORT, HOST
 from .blueprints.peers import peers, request_peers
-
 
 def start_runner():
     '''
@@ -65,7 +66,3 @@ def welcome():
     homepage
     '''
     return 'TODO: Implement Visualization'
-
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)
