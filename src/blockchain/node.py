@@ -1,8 +1,6 @@
 '''
 Node object that manages blockchain data and communicates with peers
 '''
-import requests
-
 from block import Block, compute_hash
 
 class Node:

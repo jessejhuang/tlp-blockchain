@@ -8,7 +8,7 @@ def request_server():
     Send whatever needed GET request
     '''
     send_dict = {'question':'what is the answer?'}
-    res = requests.post('http://0.0.0.0:5000//', json=send_dict)
+    res = requests.post('http://0.0.0.0:6000//', json=send_dict)
     print('response from server:', res.text)
     recieve_dict = res.json()
     print('recieve dict: ', recieve_dict)
