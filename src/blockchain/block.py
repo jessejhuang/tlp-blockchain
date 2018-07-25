@@ -2,18 +2,31 @@
 Block object and hash method used by Node
 '''
 import hashlib
-import time
+import time, datetime
+from hashlib import sha256
+
 
 class Block:
     '''
     Attributes:
         prev_hash (str): Hash of the previous block
-        data (str): Data stored in block (publicly available)
+        checkNumber(int): Check number
+        sender(str): person sending the check
+        recipient(str): person receiving the check
+        amount(int): amount transferred through the check
         timestamp (str): Time the block was generated
     '''
-    def __init__(self, data='Origin Block', prev_hash=None, timestamp=None):
-        self.prev_hash = str(prev_hash)
-        self.data = str(data)
+    def __init__(self, prev_hash: object = None, check_number: object = None, sender: object = None, recipient: object = None, amount: object = None, timestamp: object = None,
+                  ) -> object:
+        if prev_hash is None:
+            self.prev_hash = "00000000"
+            self.sender = "Origin"
+        else:
+            self.prev_hash = str(prev_hash)
+        self.check_number = check_number
+        self.sender = sender
+        self.recipient = recipient
+        self.amount = amount
         if timestamp is None:
             self.timestamp = str(time.time())
         else:
@@ -24,13 +37,8 @@ class Block:
         '''
         String representation of a block
         '''
-        return '''Block \n
-                  ------\n
-                  Data:\t%s\n
-                  Timestamp:\t%s\n
-                  Prev Hash:\t%s
-               '''\
-               %(self.data, self.timestamp, self.prev_hash)
+        return '''Check Number:\t%s\nTimestamp:\t%s\nPrev Hash:\t%s\nSender:\t%s\nRecipient:\t%s\nAmount:\t%s\n'''\
+               %(self.check_number, datetime.datetime.fromtimestamp(int(float(self.timestamp))), self.prev_hash,self.sender, self.recipient,self.amount)
 
     def __eq__(self, other):
         '''
@@ -39,14 +47,13 @@ class Block:
         Invoked when 'blockA == blockB' is called
         '''
         return other and self.prev_hash == other.prev_hash \
-            and self.data == other.data and self.timestamp == other.timestamp
+            and self.check_number == other.check_number and self.timestamp == other.timestamp
 
 def compute_hash(block):
     '''
     sha512 hash of block
     '''
-    return hashlib.sha512(
-        bytes(block.data, 'utf-8') +
-        bytes(block.prev_hash, 'utf-8') +
-        bytes(block.timestamp, 'utf-8')
-        ).hexdigest()
+    sha = sha256()
+    sha.update((str(block.sender) + str(block.recipient) + str(block.amount) + str(block.timestamp)
+                + str(block.prev_hash) + str(block.check_number)).encode())
+    return sha.hexdigest()

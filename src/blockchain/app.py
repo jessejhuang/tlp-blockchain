@@ -10,6 +10,7 @@ import requests
 from dotenv import dotenv_values
 from flask import Flask, g, request, jsonify
 from node import Node
+from block import Block
 
 FLASKENV_VARIABLES = dotenv_values(stream='.flaskenv')
 PORT = FLASKENV_VARIABLES['FLASK_RUN_PORT']
@@ -105,8 +106,14 @@ def request_peers(url):
 def welcome():
     '''
     homepage
+    allows us to see the chain, peers and last hash of the nodes blockchain
     '''
-    return 'TODO: Implement Visualization'
+    node = get_node()
+    b = Block(node.last_hash)
+    node.add_block(b,node.peers)
+    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain),str(node.peers),node.last_hash)
+    return data
+    #return 'TODO: Implement Visualization'
 
 
 @app.route('/address', methods=['POST'])
@@ -158,3 +165,4 @@ def set_node(node):
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=False)
+

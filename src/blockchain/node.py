@@ -64,4 +64,6 @@ class Node:
         '''
         self.chain.append(block)
         self.last_hash = block.hash
-        self.update_chain(network)
+        #temporarily commented out while developing
+        #self.update_chain(network)
+
