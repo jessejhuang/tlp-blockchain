@@ -1,7 +1,7 @@
 import copy
 import random
 
-from blockchain.block import Block, compute_hash
+from block import Block, compute_hash
 
 class Node:
     def __init__(self, index, original=None):
