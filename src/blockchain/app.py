@@ -106,15 +106,19 @@ def request_peers(url):
 def welcome():
     '''
     homepage
+    '''
+    return 'TODO: Implement Visualization'
+
+@app.route('/print')
+def test():
+    '''
     allows us to see the chain, peers and last hash of the nodes blockchain
     '''
     node = get_node()
-    b = Block(node.last_hash)
-    node.add_block(b,node.peers)
-    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain),str(node.peers),node.last_hash)
+    # b = Block(node.last_hash)
+    # node.add_block(b,node.peers)
+    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
     return data
-    #return 'TODO: Implement Visualization'
-
 
 @app.route('/address', methods=['POST'])
 def send_client_address():

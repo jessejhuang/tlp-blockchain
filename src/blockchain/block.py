@@ -17,7 +17,8 @@ class Block:
         timestamp (str): Time the block was generated
     '''
     def __init__(self, prev_hash: object = None, check_number: object = None, sender: object = None, recipient: object = None, amount: object = None, timestamp: object = None,
-                  ) -> object:
+                  nonce=0) -> object:
+        self.nonce = 0  # used in proof of work algorithm
         if prev_hash is None:
             self.prev_hash = "00000000"
             self.sender = "Origin"
@@ -32,6 +33,7 @@ class Block:
         else:
             self.timestamp = str(timestamp)
         self.hash = compute_hash(self)
+
 
     def __repr__(self):
         '''
@@ -55,5 +57,5 @@ def compute_hash(block):
     '''
     sha = sha256()
     sha.update((str(block.sender) + str(block.recipient) + str(block.amount) + str(block.timestamp)
-                + str(block.prev_hash) + str(block.check_number)).encode())
+                + str(block.prev_hash) + str(block.check_number) + str(block.nonce)).encode())
     return sha.hexdigest()

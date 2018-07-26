@@ -4,13 +4,14 @@ Node object that manages blockchain data and communicates with peers
 import requests
 
 from block import Block, compute_hash
+#from pyp2py.net import *
 
 class Node:
     '''
     Attributes
         chain (list(str)): The blockchain; represented as list of blocks
         peers (list(str)): List of URLs of connected nodes
-        last_hash (str): Hash of the last block in the chain
+        last_hash (str): Hash of the last block in the chai
     '''
     def __init__(self, original=None):
         '''
@@ -59,11 +60,38 @@ class Node:
         self.last_hash = self.chain[-1].hash
 
     def add_block(self, block, network):
-        '''
+        '''self.proofOfWork(block)
         Add new block and inform network
         '''
+        self.proofOfWork(block)
         self.chain.append(block)
         self.last_hash = block.hash
         #temporarily commented out while developing
         #self.update_chain(network)
 
+
+
+    def proofOfWork(self, block):
+        '''
+        Used as our method of consensus, requires any given node to perform a heavily computational
+        task before being able to add a block to the blockchain. ensures that no single
+        node can surpass the compulational power of the rest of the nodes combined on the network
+        #difficulty is hardcoded as 5,
+        :param block:
+        :return:
+        '''
+        block.nonce = 0
+        hash = block.hash
+        #will update a block's nonce attribute until the hash of the block starts with a determined number of zeroes
+        #updating the nonce will cause the block to have a new hash.
+        while not block.hash.startswith("0"* 5):
+            block.nonce += 1
+            block.hash = compute_hash(block)
+        #print(block.nonce)
+        #print(block.hash)
+
+n = Node()
+#print(n.last_hash)
+b = Block()
+n.add_block(b,n.peers)
+#print(n.last_hash)
