@@ -76,10 +76,7 @@ data = {'block':
 
 `post("url/add",json=data)`
 
-#making this call automatically distributes the new block to all other connected nodes, and begins validating it on all
-#recieving nodes. the first node to complete validation will then alert the other nodes that the block has been validated and
-#they will add it to their chain
+making this call automatically distributes the new block to all other connected nodes, and begins validating it on all receiving nodes. the first node to complete validation will then alert the other nodes that the block has been validated and they will add it to their chain
 
 
-I believe that these are the only two methods that need to be made through the front end, all other methods and routes are
-handled by the backend.
+I believe that these are the only two methods that need to be made through the front end, all other methods and routes are handled by the backend.
