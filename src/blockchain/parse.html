@@ -1,8 +1,75 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+</head>
+
+
+<div align = "center">
+  <body>
+  <p>
+    <h2>SensorNETS GUI:</h2>
+    <form action="/sensornets_gui.php" method="POST">
+
+
+        <!-- <div class= "form-group">
+        <label for="exampleInputID">ID</label>
+        <input type="text" class="form-control" name="ID"
+
+     </div> -->
+
+
+    <div class="form-group">
+        ID:
+        <input type="text" id="input" name = "ID">
+      </div>
+      
+      <div class="form-group">
+        Start Time:
+        <input type="text" id="input" name = "StartTime">
+      </div>
+      <div class="form-group">
+        End Time:
+        <input type="text" id="input" name = "EndTime">
+      </div>
+      
+      <div class="form-group">
+        Sampling Rate:
+        <input type="text" id="input" name = "SamplingRate">
+    </div>
+      
+      <div class="form-group">
+        Game ID:
+        <input type="text" id="input" name = "GameID">
+        
+      </div>
+
+      <div class="form-group">
+        Category:
+        <input type="text" id="input" name = "Category">
+      </div>
+
+      <div class="form-group">
+        Comments:
+        <input type="text" id="input" name = "Comments">
+      </div>
+      <input type="submit" name='submit' value='SUBMIT' class="btn btn-primary">
+      <input type="button" name='update' value='UPDATE' class="btn btn-primary">
+      <input type="button" name='delete' value='DELETE' class="btn btn-danger">
+    </form>
+  </p>
+
+  </body>
+
+
+</div>
+
+
+
 <!DOCTYPE html>
 <html>
 <body>
 
-<h1>The XMLHttpRequest Object</h1>
 
 <button type="button" onclick="loadDoc()">Request data</button>
 
@@ -32,14 +99,14 @@ function loadDoc() {
 // var obj = JSON.parse(filename);
 
 // document.getElementById("demo").innerHTML = obj.firstName;
-	
+  
 
-	// Chain: [Check Number:	None Timestamp:	2018-07-26 13:26:25 Prev Hash:	00000000 Sender:	None Recipient:	None Amount:	None ] Peers: [u'http://67.205.135.0:6000', u'http://6e6cdcb1.ngrok.io', u'https://6e6cdcb1.ngrok.io', u'23.99.178.214', u'http://c536113b.ngrok.io', u'http://c7b052e4.ngrok.io', u'https://c7b052e4.ngrok.io', u'http://5313cb9b.ngrok.io', u'http://d943c455.ngrok.io', u'http://90935a1a.ngrok.io', u'https://90935a1a.ngrok.io', u'https://db048355.ngrok.io', u'http://db048355.ngrok.io', u'https://a41c4790.ngrok.io', u'http://91fed98d.ngrok.io', u'http://0a9e8112.ngrok.io', u'https://0a9e8112.ngrok.io'] Last Hash: b724392c0cf1794c114f1aaa65523f0771d880e89d63be81b2d84a17ad15eea6
-
-
-	//get request
+  // Chain: [Check Number:  None Timestamp: 2018-07-26 13:26:25 Prev Hash:  00000000 Sender:  None Recipient: None Amount:  None ] Peers: [u'http://67.205.135.0:6000', u'http://6e6cdcb1.ngrok.io', u'https://6e6cdcb1.ngrok.io', u'23.99.178.214', u'http://c536113b.ngrok.io', u'http://c7b052e4.ngrok.io', u'https://c7b052e4.ngrok.io', u'http://5313cb9b.ngrok.io', u'http://d943c455.ngrok.io', u'http://90935a1a.ngrok.io', u'https://90935a1a.ngrok.io', u'https://db048355.ngrok.io', u'http://db048355.ngrok.io', u'https://a41c4790.ngrok.io', u'http://91fed98d.ngrok.io', u'http://0a9e8112.ngrok.io', u'https://0a9e8112.ngrok.io'] Last Hash: b724392c0cf1794c114f1aaa65523f0771d880e89d63be81b2d84a17ad15eea6
 
 
+  //get request
 
-	var text = JSON.parse(filename);
+
+
+  var text = JSON.parse(filename);
  -->
