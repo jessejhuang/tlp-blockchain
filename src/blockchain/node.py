@@ -5,6 +5,7 @@ import requests
 
 from block import Block, compute_hash
 #from pyp2py.net import *
+import json
 
 class Node:
     '''
@@ -22,8 +23,10 @@ class Node:
         self.chain = []
         self.peers = []
         if original is None:
-            self.chain.append(Block())
-            self.last_hash = self.chain[-1].hash
+            #s = json.dumps(foo.__dict__)
+            origin = Block()
+            self.last_hash = origin.hash
+            self.chain.append(json.dumps(Block().__dict__))
         else:
             self.copy_chain(original)
             self.peers = original.peers
@@ -64,7 +67,7 @@ class Node:
         Add new block and inform network
         '''
         self.proofOfWork(block)
-        self.chain.append(block)
+        self.chain.append(json.dumps(block.__dict__))
         self.last_hash = block.hash
         #temporarily commented out while developing
         #self.update_chain(network)

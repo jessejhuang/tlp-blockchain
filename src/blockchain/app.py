@@ -109,14 +109,31 @@ def welcome():
     '''
     return 'TODO: Implement Visualization'
 
-@app.route('/print')
+@app.route('/print',methods=['GET'])
 def test():
     '''
     allows us to see the chain, peers and last hash of the nodes blockchain
     '''
     node = get_node()
-    # b = Block(node.last_hash)
-    # node.add_block(b,node.peers)
+    b = Block(node.last_hash)
+    node.add_block(b,node.peers)
+    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
+    #return data
+
+    json = {"Chain": node.chain, "Peers": node.peers, "Last Hash": node.last_hash}
+    return jsonify(chain=node.chain,
+                   peers=node.peers,
+                   last_hash=node.last_hash
+                   )
+
+@app.route('/print', methods=['POST'])
+def receiveBlock():
+    '''
+    allows node to receive new blocks from other nodes
+    '''
+    node = get_node()
+    #b = Block(node.last_hash)
+    #node.add_block(b,node.peers)
     data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
     return data
 
@@ -160,6 +177,15 @@ def get_node():
         node = Node()
         set_node(node)
     return node
+
+def sendBlock(block, node_url):
+    '''
+
+    :param block: block to be sent to another node
+    :param node_url: other node's url
+    :return:
+    '''
+    block = {'new_block': request.json['new_block']}
 
 def set_node(node):
     '''
