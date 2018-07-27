@@ -109,8 +109,8 @@ def welcome():
     allows us to see the chain, peers and last hash of the nodes blockchain
     '''
     node = get_node()
-    b = Block(node.last_hash)
-    node.add_block(b,node.peers)
+    #b = Block(node.last_hash)
+    #node.add_block(b,node.peers)
     data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain),str(node.peers),node.last_hash)
     return data
     #return 'TODO: Implement Visualization'
