@@ -41,7 +41,7 @@ I've added a simple example test, and you can run all tests on your local machin
 
 
 ###DATA FORMAT INFO:
-
+'
 get("url/print")
 
 returns a json object structured as below...there are only 3 keys to the returned json (chain, last_hash, and peers)
@@ -103,6 +103,6 @@ post("url/add",json=data)
 #recieving nodes. the first node to complete validation will then alert the other nodes that the block has been validated and
 #they will add it to their chain
 
-
+'
 I believe that these are the only two methods that need to be made through the front end, all other methods and routes are
 handled by the backend.
