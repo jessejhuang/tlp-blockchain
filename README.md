@@ -42,11 +42,11 @@ I've added a simple example test, and you can run all tests on your local machin
 
 ###DATA FORMAT INFO:
 
-'get("url/print")'
+`get("url/print")`
 
 returns a json object structured as below...there are only 3 keys to the returned json (chain, last_hash, and peers)
 
-'''
+```
 {
      'chain': #a list of dictionaries where each dictionary represents one check transaction
                  [
@@ -80,7 +80,7 @@ returns a json object structured as below...there are only 3 keys to the returne
 
      'peers': [url, url2, url3, url4,...]
 }
-'''
+```
 
 
 
@@ -89,7 +89,7 @@ returns a json object structured as below...there are only 3 keys to the returne
 /add    adds a new block to one node, which is then shared to all connected peers using gossip protocol
 requires a data json to be passed in representing the new block and what nodes it has been shared to.
 
-'''
+```
 data = {'block':
               {'sender':'cory',
                'recipient':'baria',
@@ -99,9 +99,9 @@ data = {'block':
                ,
        'seen_nodes':[]
        }
-'''
+```
 
-'post("url/add",json=data)'
+`post("url/add",json=data)`
 
 #making this call automatically distributes the new block to all other connected nodes, and begins validating it on all
 #recieving nodes. the first node to complete validation will then alert the other nodes that the block has been validated and
