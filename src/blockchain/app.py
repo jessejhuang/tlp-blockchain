@@ -11,6 +11,7 @@ from dotenv import dotenv_values
 from flask import Flask, g, request, jsonify
 from node import Node
 from block import Block
+import json
 
 FLASKENV_VARIABLES = dotenv_values(stream='.flaskenv')
 PORT = FLASKENV_VARIABLES['FLASK_RUN_PORT']
@@ -115,9 +116,9 @@ def test():
     allows us to see the chain, peers and last hash of the nodes blockchain
     '''
     node = get_node()
-    b = Block(node.last_hash)
-    node.add_block(b,node.peers)
-    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
+    #b = Block(node.last_hash)
+    #node.add_block(b,node.peers)
+    data = "Chain: {}\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
     #return data
 
     json = {"Chain": node.chain, "Peers": node.peers, "Last Hash": node.last_hash}
@@ -126,15 +127,33 @@ def test():
                    last_hash=node.last_hash
                    )
 
-@app.route('/print', methods=['POST'])
+@app.route('/add', methods=['POST'])
 def receiveBlock():
     '''
-    allows node to receive new blocks from other nodes
+    allows node to receive new blocks from user to share to network and begin validation
     '''
     node = get_node()
+    new_block_data = request.get_json()
+    new_block = Block(node.last_hash, new_block_data['block']['check_number'], new_block_data['block']['sender'], new_block_data['block']['recipient'], new_block_data['block']['amount'])
+
+    node.share_block(new_block, new_block_data, get_own_address())
+    node.add_block(new_block, get_own_address())
+
+    data = "New Block Pending: Sender: {}\nRecipient: {}\nAmount: {}".format(str(new_block_data['block']['sender']), str(new_block_data['block']['recipient']), new_block_data['block']['amount'])
+    return data
+
+@app.route('/halt', methods=['POST'])
+def updateChain():
+    '''
+    allows node to receive validated block from other nodes
+    '''
+    node = get_node()
+    new_block_data = request.get_json()
+    new_Block = Block(node.last_hash, new_block_data['check_number'], new_block_data['sender'], new_block_data['recipient'], new_block_data['amount'])
+    node.chain.append(json.dumps(new_Block.__dict__))
     #b = Block(node.last_hash)
     #node.add_block(b,node.peers)
-    data = "Chain: {}\n\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
+    data = "New Block added to chain: Sender: {}\nRecipient: {}\nAmount: {}".format(str(new_block_data['sender']), str(new_block_data['recipient']), new_block_data['amount'])
     return data
 
 @app.route('/address', methods=['POST'])
@@ -142,6 +161,7 @@ def send_client_address():
     '''
     Return a client's address
     '''
+
     return jsonify({'address': request.remote_addr})
 
 @app.route('/peers', methods=['POST'])

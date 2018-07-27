@@ -6,6 +6,7 @@ import requests
 from block import Block, compute_hash
 #from pyp2py.net import *
 import json
+import requests
 
 class Node:
     '''
@@ -62,39 +63,70 @@ class Node:
         self.chain = max(network, key=lambda node: len(node.chain) * self.is_valid(node)).chain
         self.last_hash = self.chain[-1].hash
 
-    def add_block(self, block, network):
+    def add_block(self, block, url):
         '''self.proofOfWork(block)
-        Add new block and inform network
+        Add new block after receiving it from user or network
         '''
-        self.proofOfWork(block)
+
+        self.proofOfWork(block,url)
+        #print("REAL VALIDATION ADD")
         self.chain.append(json.dumps(block.__dict__))
         self.last_hash = block.hash
-        #temporarily commented out while developing
-        #self.update_chain(network)
 
 
+    def share_block(self, block, block_data, current_url):
+        '''
 
-    def proofOfWork(self, block):
+        :param block: new block being shared throughout the network
+        :param seen_nodes: keeps track of what nodes have already received the block
+        :param current_url: the node's current url passed in from the server instance
+        :return:
+        '''
+        seen_nodes = block_data["seen_nodes"]
+        block_data["seen_nodes"].append(current_url)
+        seen_nodes.append(current_url)
+        for peer in self.peers:
+            if peer not in seen_nodes and current_url != peer:
+                try:
+                    seen_nodes.append(peer)
+                    block_data["see" \
+                               "n_nodes"].append(current_url)
+                    requests.post(peer+"/add", json=block_data)
+                except:
+                    block_data["seen_nodes"].append(peer)
+                    seen_nodes.append(peer)
+
+
+    def proofOfWork(self, block, url):
         '''
         Used as our method of consensus, requires any given node to perform a heavily computational
         task before being able to add a block to the blockchain. ensures that no single
         node can surpass the compulational power of the rest of the nodes combined on the network
         #difficulty is hardcoded as 5,
+
+        only attempts to validate while node chain length is unchanged,
+        a change in node chain length implies that another node has completed validation of the block
         :param block:
         :return:
         '''
+        original_chain_length = len(self.chain)
         block.nonce = 0
-        hash = block.hash
-        #will update a block's nonce attribute until the hash of the block starts with a determined number of zeroes
-        #updating the nonce will cause the block to have a new hash.
-        while not block.hash.startswith("0"* 5):
+        while len(self.chain) == original_chain_length:
+            hash = block.hash
+            if hash.startswith("0"*5):
+                self.haltNetworkValidation(block, url)
+                return
             block.nonce += 1
             block.hash = compute_hash(block)
-        #print(block.nonce)
-        #print(block.hash)
+        #will update a block's nonce attribute until the hash of the block starts with a determined number of zeroes
+        #updating the nonce will cause the block to have a new hash.
 
-n = Node()
-#print(n.last_hash)
-b = Block()
-n.add_block(b,n.peers)
-#print(n.last_hash)
+    def haltNetworkValidation(self, block, url):
+        data = {"halted_nodes": []}
+        data['halted_nodes'].append(url)
+        for peer in self.peers:
+            if peer not in data['halted_nodes'] and url != peer:
+                try:
+                    requests.post(peer + "/halt", json={json.dumps(block.__dict__)})
+                except:
+                    continue
