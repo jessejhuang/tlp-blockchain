@@ -1,4 +1,4 @@
-# exclude everything except requirements.txt, src
+# exclude everything except specified folders
 /*
 !/src
 !/.gitignore
