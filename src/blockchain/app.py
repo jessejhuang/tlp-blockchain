@@ -166,6 +166,7 @@ def updateChain():
     new_Block = Block(node.last_hash, new_block_data['check_number'],new_block_data['sender'],new_block_data['recipient'], new_block_data['amount'],new_block_data['timestamp'])
     new_Block.hash = hash
     node.last_hash = hash
+    new_Block.nonce = new_block_data['nonce']
     node.chain.append(json.dumps(new_Block.__dict__))
     #b = Block(node.last_hash)
     #node.add_block(b,node.peers)
