@@ -93,6 +93,7 @@ class Node:
                     if requests.get(peer).status_code == 200:
                         #print(block.hash)
                         block_data['hash'] = block.hash
+                        block_data['timestamp'] = block.timestamp
                         #print(current_url)
                         #print(peer)
                         #block_data["seen_nodes"].append(current_url)

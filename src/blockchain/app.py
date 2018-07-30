@@ -141,8 +141,9 @@ def receiveBlock():
 
 
 
-    node.share_block(new_block, new_block_data, get_own_address())
+
     node.add_block(new_block, get_own_address())
+    node.share_block(new_block, new_block_data, get_own_address())
 
     data = "New Block Pending: Sender: {}\nRecipient: {}\nAmount: {}".format(str(new_block_data['block']['sender']), str(new_block_data['block']['recipient']), new_block_data['block']['amount'])
     return data
