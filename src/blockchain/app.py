@@ -163,7 +163,7 @@ def updateChain():
 
 
     #new_Block = Block(node.last_hash, new_block_data['check_number'], new_block_data['sender'], new_block_data['recipient'], new_block_data['amount'])
-    new_Block = Block(node.last_hash, new_block_data['block']['check_number'], new_block_data['block']['sender'],new_block_data['block']['recipient'], new_block_data['block']['amount'])
+    new_Block = Block(node.last_hash, new_block_data['block']['check_number'], new_block_data['block']['sender'],new_block_data['block']['recipient'], new_block_data['block']['amount'],new_block_data['block']['timestamp'])
     new_Block.hash = hash
     node.chain.append(json.dumps(new_Block.__dict__))
     #b = Block(node.last_hash)

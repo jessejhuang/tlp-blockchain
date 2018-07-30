@@ -91,6 +91,8 @@ class Node:
             if peer not in seen_nodes and current_instance not in peer:
                 try:
                     if requests.get(peer).status_code == 200:
+                        #print(block.hash)
+                        block_data['hash'] = block.hash
                         #print(current_url)
                         #print(peer)
                         #block_data["seen_nodes"].append(current_url)
