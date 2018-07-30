@@ -101,7 +101,6 @@ def request_peers(url):
     response = requests.post(post_url, json={'url': own_address})
     node = get_node()
     node.peers = response.json()['peers']
-    node.peers.append('http://7f3f6de4.ngrok.io')
     set_node(node)
 
 @app.route('/')
@@ -121,7 +120,7 @@ def test():
     #node.add_block(b,node.peers)
     data = "Chain: {}\nPeers: {}\n\nLast Hash: {}".format(str(node.chain), str(node.peers), node.last_hash)
     #return data
-
+    request_peers("http://{}:{}".format(ORIGIN_IP, PORT))
     json = {"Chain": node.chain, "Peers": node.peers, "Last Hash": node.last_hash}
     return jsonify(chain=node.chain,
                    peers=node.peers,
