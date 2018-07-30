@@ -75,7 +75,7 @@ def get_own_address():
         address = requests.get('https://enabledns.com/ip', verify=False).text #portless IP
         if address in ORIGIN_IP:
             print('This is the origin url')
-            address = 'http://{}:{}'.format(address, PORT)
+            address = 'https://{}:{}'.format(address, PORT)
         else:
             res = requests.get('http://localhost:4040/api/tunnels') #get ngrok URL
             address = res.json()['tunnels'][0]['public_url']
@@ -101,6 +101,7 @@ def request_peers(url):
     response = requests.post(post_url, json={'url': own_address})
     node = get_node()
     node.peers = response.json()['peers']
+    node.peers.append('http://7f3f6de4.ngrok.io')
     set_node(node)
 
 @app.route('/')
@@ -134,7 +135,11 @@ def receiveBlock():
     '''
     node = get_node()
     new_block_data = request.get_json()
+
+
     new_block = Block(node.last_hash, new_block_data['block']['check_number'], new_block_data['block']['sender'], new_block_data['block']['recipient'], new_block_data['block']['amount'])
+
+
 
     node.share_block(new_block, new_block_data, get_own_address())
     node.add_block(new_block, get_own_address())
@@ -149,7 +154,16 @@ def updateChain():
     '''
     node = get_node()
     new_block_data = request.get_json()
+    hash = ""
+    try:
+        hash = new_block_data['hash']
+        print(hash)
+    except:
+        pass
+
+
     new_Block = Block(node.last_hash, new_block_data['check_number'], new_block_data['sender'], new_block_data['recipient'], new_block_data['amount'])
+    new_Block.hash = hash
     node.chain.append(json.dumps(new_Block.__dict__))
     #b = Block(node.last_hash)
     #node.add_block(b,node.peers)

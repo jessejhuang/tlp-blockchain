@@ -85,13 +85,18 @@ class Node:
         seen_nodes = block_data["seen_nodes"]
         block_data["seen_nodes"].append(current_url)
         seen_nodes.append(current_url)
+        #self.peers = [peer for peer in self.peers if peer != current_url] #removes all instances of current url from shared peers
+        current_instance = current_url.split("//")[1] #gets ngrok instance regardless of http or https
         for peer in self.peers:
-            if peer not in seen_nodes and current_url != peer:
+            if peer not in seen_nodes and current_instance not in peer:
                 try:
-                    seen_nodes.append(peer)
-                    block_data["see" \
-                               "n_nodes"].append(current_url)
-                    requests.post(peer+"/add", json=block_data)
+                    if requests.get(peer).status_code == 200:
+                        print(current_url)
+                        print(peer)
+                        block_data["seen_nodes"].append(current_url)
+                        requests.post(peer+"/add", json=block_data)
+                        seen_nodes.append(peer)
+                        print(block_data["seen_nodes"])
                 except:
                     block_data["seen_nodes"].append(peer)
                     seen_nodes.append(peer)
