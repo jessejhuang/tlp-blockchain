@@ -93,12 +93,13 @@ class Node:
                     if requests.get(peer).status_code == 200:
                         #print(block.hash)
                         block_data['hash'] = block.hash
-                        block_data['timestamp'] = block.timestamp
+                        block_data['block']['timestamp'] = block.timestamp
                         #print(current_url)
                         #print(peer)
                         #block_data["seen_nodes"].append(current_url)
                         #requests.post(peer+"/add", json=block_data)
-                        requests.post(peer + "/halt", json=block_data)
+                        #requests.post(peer + "/halt", json=block_data)
+                        requests.post(peer + "/halt", json=block.__dict__)
                         seen_nodes.append(peer)
                         #print(block_data["seen_nodes"])
                 except:
