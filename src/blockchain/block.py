@@ -16,8 +16,7 @@ class Block:
         amount(int): amount transferred through the check
         timestamp (str): Time the block was generated
     '''
-    def __init__(self, prev_hash: object = None, check_number: object = None, sender: object = None, recipient: object = None, amount: object = None, timestamp: object = None,
-                  nonce=0) -> object:
+    def __init__(self, prev_hash = None, check_number = None, sender= None, recipient = None, amount = None, timestamp = None):
         self.nonce = 0  # used in proof of work algorithm
         if prev_hash is None:
             self.prev_hash = "00000000"
