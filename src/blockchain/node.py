@@ -91,12 +91,13 @@ class Node:
             if peer not in seen_nodes and current_instance not in peer:
                 try:
                     if requests.get(peer).status_code == 200:
-                        print(current_url)
-                        print(peer)
-                        block_data["seen_nodes"].append(current_url)
-                        requests.post(peer+"/add", json=block_data)
+                        #print(current_url)
+                        #print(peer)
+                        #block_data["seen_nodes"].append(current_url)
+                        #requests.post(peer+"/add", json=block_data)
+                        requests.post(peer + "/halt", json=block_data)
                         seen_nodes.append(peer)
-                        print(block_data["seen_nodes"])
+                        #print(block_data["seen_nodes"])
                 except:
                     block_data["seen_nodes"].append(peer)
                     seen_nodes.append(peer)
