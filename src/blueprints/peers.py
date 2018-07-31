@@ -3,7 +3,7 @@ Request or return connected nodes
 '''
 import requests
 from flask import Blueprint, jsonify, request
-from .. import database as db
+from src import database as db
 
 peers = Blueprint('__peers__', __name__)
 

@@ -5,6 +5,9 @@
 import sqlite3
 import requests
 from environment import ORIGIN_IP, PORT
+from blockchain.node import Node
+
+SESSION = {}
 
 def setup_db():
     '''
@@ -17,16 +20,6 @@ def setup_db():
         CREATE TABLE network(
             address TEXT PRIMARY KEY
         )
-    ''')
-
-    cur.execute('DROP TABLE IF EXISTS ledger')
-    cur.execute('''
-        CREATE TABLE ledger(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            data TEXT,
-            timestamp TEXT,
-            prev_hash TEXT
-        ) 
     ''')
 
     cur.execute('DROP TABLE IF EXISTS local')
@@ -98,4 +91,20 @@ def set_connected_nodes(addresses):
     cur.executemany(stmt, data)
     connection.commit()
     connection.close()
-    
+
+def get_node():
+    '''
+    Get node object tracked by flask instance
+    '''
+    node = SESSION.get('node')
+    if node is None:
+        node = Node()
+    node.peers = list(get_connected_nodes())
+    set_node(node)
+    return node
+
+def set_node(node):
+    '''
+    Set node object tracked by flask instance
+    '''
+    SESSION['node'] = node

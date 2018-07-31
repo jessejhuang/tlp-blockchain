@@ -243,6 +243,7 @@ good-names=i,
            _,
            app,
            peers,
+           interface,
            ask,
            db
 

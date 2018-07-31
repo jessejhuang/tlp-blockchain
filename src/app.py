@@ -12,6 +12,7 @@ from flask import Flask
 import database as db
 from environment import ORIGIN_IP, PORT, HOST
 from .blueprints.peers import peers, request_peers
+from .blueprints.interface import interface
 
 def start_runner():
     '''
@@ -44,6 +45,7 @@ def create_app():
     start_runner()
     application = Flask(__name__)
     application.register_blueprint(peers)
+    application.register_blueprint(interface)
     return application
 
 app = create_app()
