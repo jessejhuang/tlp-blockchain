@@ -102,12 +102,35 @@ def request_peers(url):
     response = requests.post(post_url, json={'url': own_address})
     node = get_node()
     node.peers = response.json()['peers']
-    node.peers.append('http://7f3f6de4.ngrok.io')
+    node.peers.append('http://7f3f6de4.ngrok.io')	
     set_node(node)
 
 @app.route('/')
-def welcome():
-	return render_template('index.html')
+def show_homepage():
+	my_address = get_own_address() + "/result" #this is where it will post to
+	
+	return render_template('index.html', url = my_address)
+	
+@app.route('/result',methods = ['POST', 'GET'])
+def result():
+	if request.method == 'POST': #if user submits the form...
+		result = request.form
+		check_number = result["CheckNumber"]
+		recipient = result["Amount"]
+		amount = result["Sender"]
+		sender = result["Recipient"]
+	#	new_block = Block(node.last_hash, check_number, sender, recipient,amount)
+
+	#	node.add_block(new_block, get_own_address())
+	#	node.share_block(new_block, new_block_data, get_own_address())
+		
+		data = {"block":{"sender":sender, "recipient":recipient,"amount":float(amount),"check_number":check_number},"seen_nodes":[]}
+		#print(get_own_address() + '/add')
+		requests.post(get_own_address() + "/add",json=data)
+		#return("result is " + result["CheckNumber"])
+		
+		return render_template('index.html')
+	
     
     #return 'TODO: Implement Visualization'
 
