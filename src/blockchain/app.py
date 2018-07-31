@@ -101,6 +101,13 @@ def request_peers(url):
     response = requests.post(post_url, json={'url': own_address})
     node = get_node()
     node.peers = response.json()['peers']
+    for peer in node.peers:
+        try:
+            r = request.get(peer)
+            if r.status_code == 200:
+                continue
+        except:
+            node.peers.remove(peer)
     set_node(node)
 
 @app.route('/')
