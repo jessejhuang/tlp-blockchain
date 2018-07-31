@@ -12,6 +12,7 @@ from flask import Flask, g, request, jsonify
 from node import Node
 from block import Block
 import json
+from flask import render_template
 
 FLASKENV_VARIABLES = dotenv_values(stream='.flaskenv')
 PORT = FLASKENV_VARIABLES['FLASK_RUN_PORT']
@@ -106,10 +107,9 @@ def request_peers(url):
 
 @app.route('/')
 def welcome():
-    '''
-    homepage
-    '''
-    return 'TODO: Implement Visualization'
+	return render_template('index.html')
+    
+    #return 'TODO: Implement Visualization'
 
 @app.route('/print',methods=['GET'])
 def test():
@@ -203,7 +203,7 @@ def send_peers():
     print('Node.peers[:-1]: ', node.peers[:-1])
     set_node(node)
     return jsonify(peers)
-
+	
 def get_node():
     '''
     Get node object tracked by flask instance
