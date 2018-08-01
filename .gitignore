@@ -1,10 +1,12 @@
-# exclude everything except requirements.txt, src
+# exclude everything except specified folders
 /*
 !/src
 !/.gitignore
 !/requirements.txt
 !/.travis.yml
 !/README.md
+!/.pylintrc
+!/.flaskenv
 
 __pycache__/
 *.pyc
