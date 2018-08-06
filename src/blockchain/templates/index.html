@@ -1,5 +1,12 @@
+<!DOCTYPE html>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    
+    
 </head>
 
 
@@ -7,13 +14,7 @@
   <body>
   <p>
     <h2>TLP BLOCKCHAIN</h2>
-    <form id = "myForm" action={{url}}  method="POST">
-
-    <div class="form-group">
-        Check Number:
-        <input type="text" id="checkNumber" name = "CheckNumber">
-      </div>
-      
+    <form id = "myForm" action={{url}}  method="POST" input type="hidden">      
       <div class="form-group">
         Amount:
         <input type="text" id="amount" name = "Amount">
@@ -28,19 +29,27 @@
         <input type="text" id="recipient" name = "Recipient">
     </div>
 
-    <input type="submit" name='submit' value='Add Block' class="btn btn-primary">
+    <input type="submit" name='submit' onclick="showWaiting()" value='Add Block' class="btn btn-primary">
 
     </form>
+      
   </p>
-
+        
+      <script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'hello.js') }}" ></script> 
   </body>
+<form id = "myForm" action={{url2}}  method="POST">
+  <input type="submit" name='View Blockchain' action={{url2}} value='View Blockchain'  class="btn btn-primary"></button>
+</form>
+<div id="loading"> </div>
+<div>{{blockchain}}  </div>
+<div>{{blockchain_data}}  </div> 
 
-  <button type="button" onclick="loadDoc()" class="btn btn-primary">View Blockchain</button>
   <!-- when this button is pressed, it needs to GET the text from ngrok, parse it, and make a 
   bloc -->
 
 
-</div>
+</div>      
 
 
 <!-- test!! -->

@@ -13,6 +13,9 @@ from node import Node
 from block import Block
 import json
 from flask import render_template
+import uuid
+from flask import redirect
+
 
 FLASKENV_VARIABLES = dotenv_values(stream='.flaskenv')
 PORT = FLASKENV_VARIABLES['FLASK_RUN_PORT']
@@ -103,37 +106,53 @@ def request_peers(url):
     node = get_node()
     node.peers = response.json()['peers']
     node.peers.append('http://7f3f6de4.ngrok.io')	
-    set_node(node)
+    set_node(node) 
 
 @app.route('/')
-def show_homepage():
+def show_homepage(methods = ['POST']):
 	my_address = get_own_address() + "/result" #this is where it will post to
+	my_address2 = get_own_address() + "/show"
+	return render_template('index.html', url = my_address, url2 = my_address2 )
 	
-	return render_template('index.html', url = my_address)
-	
-@app.route('/result',methods = ['POST', 'GET'])
+@app.route('/result',methods = ['POST'])
 def result():
+
 	if request.method == 'POST': #if user submits the form...
+		
 		result = request.form
-		check_number = result["CheckNumber"]
-		recipient = result["Amount"]
-		amount = result["Sender"]
-		sender = result["Recipient"]
+		recipient = result["Recipient"]
+		amount = result["Amount"]
+		sender = result["Sender"]
 	#	new_block = Block(node.last_hash, check_number, sender, recipient,amount)
 
 	#	node.add_block(new_block, get_own_address())
 	#	node.share_block(new_block, new_block_data, get_own_address())
-		
+		check_number = str(uuid.uuid4())
 		data = {"block":{"sender":sender, "recipient":recipient,"amount":float(amount),"check_number":check_number},"seen_nodes":[]}
 		#print(get_own_address() + '/add')
+		#print(get_own_address() + '/add')
 		requests.post(get_own_address() + "/add",json=data)
+		response = "Success! Block added!"
 		#return("result is " + result["CheckNumber"])
+		my_address = get_own_address()
+		return redirect(my_address, code=301)
 		
-		return render_template('index.html')
+@app.route('/show', methods = ['POST'])
+def show_blockchain():
 	
-    
-    #return 'TODO: Implement Visualization'
+	block_data = requests.get(get_own_address() + "/print")
+	data = block_data.text
+	print (block_data.text)
+	chain_data = block_data.json()['chain']
+	#chain_data = block_data.json()['chain'][1]
+	#chain_data = block_data.json()['chain'][2]
+	#for element in block_data.json()['chain']:
+	#	print (str(element))
+	return render_template ('index.html', blockchain_data = chain_data)
 
+		
+    #return 'TODO: Implement Visualization'
+	
 @app.route('/print',methods=['GET'])
 def test():
     '''
@@ -162,9 +181,6 @@ def receiveBlock():
 
     new_block = Block(node.last_hash, new_block_data['block']['check_number'], new_block_data['block']['sender'], new_block_data['block']['recipient'], new_block_data['block']['amount'])
 
-
-
-
     node.add_block(new_block, get_own_address())
     node.share_block(new_block, new_block_data, get_own_address())
 
@@ -175,7 +191,7 @@ def receiveBlock():
 def updateChain():
     '''
     allows node to receive validated block from other nodes
-    '''
+    ''' 
     node = get_node()
     new_block_data = request.get_json()
     hash = ""
@@ -184,7 +200,6 @@ def updateChain():
         print(hash)
     except:
         pass
-
 
     #new_Block = Block(node.last_hash, new_block_data['check_number'], new_block_data['sender'], new_block_data['recipient'], new_block_data['amount'])
     new_Block = Block(node.last_hash, new_block_data['check_number'],new_block_data['sender'],new_block_data['recipient'], new_block_data['amount'],new_block_data['timestamp'])
