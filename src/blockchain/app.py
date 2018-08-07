@@ -112,7 +112,7 @@ def request_peers(url):
 def show_homepage(methods = ['POST']):
 	my_address = get_own_address() + "/result" #this is where it will post to
 	my_address2 = get_own_address() + "/show"
-	return render_template('index.html', url = my_address, url2 = my_address2 )
+	return render_template('index.html', url = my_address, url2 = my_address2) 
 	
 @app.route('/result',methods = ['POST'])
 def result():
@@ -131,7 +131,7 @@ def result():
 		data = {"block":{"sender":sender, "recipient":recipient,"amount":float(amount),"check_number":check_number},"seen_nodes":[]}
 		#print(get_own_address() + '/add')
 		#print(get_own_address() + '/add')
-		requests.post(get_own_address() + "/add",json=data)
+		requests.post(get_own_address() + "/add",json=data)	
 		response = "Success! Block added!"
 		#return("result is " + result["CheckNumber"])
 		my_address = get_own_address()
@@ -144,11 +144,8 @@ def show_blockchain():
 	data = block_data.text
 	print (block_data.text)
 	chain_data = block_data.json()['chain']
-	#chain_data = block_data.json()['chain'][1]
-	#chain_data = block_data.json()['chain'][2]
-	#for element in block_data.json()['chain']:
-	#	print (str(element))
-	return render_template ('index.html', blockchain_data = chain_data)
+	my_homepage = get_own_address() + "/result"
+	return render_template ('index.html', blockchain_data = chain_data, url = my_homepage) 
 
 		
     #return 'TODO: Implement Visualization'
