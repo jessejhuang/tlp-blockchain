@@ -65,9 +65,6 @@ class Node:
         '''
 
         self.proof_of_work(block, url)
-        self.chain.append(json.dumps(block.__dict__))
-        self.last_hash = block.hash
-
 
     def share_block(self, block, block_data, current_url):
         '''
@@ -113,7 +110,9 @@ class Node:
         block.nonce = 0
         while len(self.chain) == original_chain_length:
             valid_hash = block.hash
-            if valid_hash.startswith("0"*5):
+            if valid_hash.startswith('0'*5):
+                self.chain.append(json.dumps(block.__dict__))
+                self.last_hash = block.hash
                 self.halt_network_validation(block, url)
                 return
             block.nonce += 1

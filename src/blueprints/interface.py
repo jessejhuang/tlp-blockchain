@@ -37,16 +37,7 @@ def receive_block():
                      )
     node.add_block(new_block, db.get_own_address())
     node.share_block(new_block, new_block_data, db.get_own_address())
-    data = '''
-            New Block Pending: Sender: {}\n
-            Recipient: {}\n
-            Amount: {}
-            '''\
-        .format(str(new_block_data['block']['sender']),
-                str(new_block_data['block']['recipient']),
-                new_block_data['block']['amount']
-               )
-    return data
+    return jsonify(success=True)
 
 @interface.route('/halt', methods=['POST'])
 def update_chain():
