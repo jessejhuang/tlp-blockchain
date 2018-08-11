@@ -1,6 +1,7 @@
 '''
 Node object that manages blockchain data and communicates with peers
 '''
+import random
 import json
 import requests
 from block import Block, compute_hash
@@ -61,14 +62,13 @@ class Node:
 
     def add_block(self, block, url):
         '''
-        Do proof of work, then add a new block after receiving it from user or network
+        Attempt to add block by starting proof of work
         '''
-
         self.proof_of_work(block, url)
 
     def share_block(self, block, block_data, current_url):
         '''
-
+        Once a block has been added to the chain, inform other peers to stop doing work
         :param block: new block being shared throughout the network
         :param seen_nodes: keeps track of what nodes have already received the block
         :param current_url: the node's current url passed in from the server instance
@@ -78,20 +78,21 @@ class Node:
         block_data['seen_nodes'].append(current_url)
         seen_nodes.append(current_url)
         current_instance = current_url.split("//")[1] # get ngrok url regardless of http or https
-        for peer in self.peers:
-            if peer not in seen_nodes and current_instance not in peer:
+        other_nodes = [peer for peer in self.peers if current_instance not in peer]
+        for __ in range(5): # Randomly select 5 peers to share block to
+            random_node = random.choice(other_nodes)
+            if random_node not in seen_nodes:
                 try:
-                    if requests.get(peer).status_code == 200:
+                    if requests.get(random_node).status_code == 200:
                         block_data['hash'] = block.hash
                         block_data['block']['timestamp'] = block.timestamp
-                        requests.post(peer + "/halt", json=block.__dict__)
-                        seen_nodes.append(peer)
+                        requests.post(random_node + "/halt", json=block.__dict__)
+                        seen_nodes.append(random_node)
                 except (ConnectionRefusedError,
                         requests.exceptions.ConnectionError,
                         requests.exceptions.MissingSchema):
-                    block_data['seen_nodes'].append(peer)
-                    seen_nodes.append(peer)
-
+                    block_data['seen_nodes'].append(random_node)
+                    seen_nodes.append(random_node)
 
     def proof_of_work(self, block, url):
         '''

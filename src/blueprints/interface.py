@@ -3,10 +3,8 @@ Routes interfaced by frontend
 '''
 import json
 from flask import Blueprint, jsonify, request
-from peers import request_peers
 from src.blockchain.block import Block
 from .. import database as db
-from ..environment import ORIGIN_IP, PORT
 
 interface = Blueprint('__interface__', __name__)
 
@@ -16,7 +14,6 @@ def get_node_info():
     allows us to see the chain, peers and last hash of the nodes blockchain
     '''
     node = db.get_node()
-    request_peers("http://{}:{}".format(ORIGIN_IP, PORT))
     return jsonify(chain=node.chain,
                    peers=node.peers,
                    last_hash=node.last_hash
