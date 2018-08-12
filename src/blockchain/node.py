@@ -75,7 +75,7 @@ class Node:
         '''
         Attempt to add block by starting proof of work
         '''
-        self.proof_of_work(block, url)
+        self.proof_of_work(block)
         self.share_chain(url)
 
     def share_chain(self, current_url):
@@ -86,8 +86,12 @@ class Node:
         :param block: new block being shared throughout the network
         :param seen_nodes: keeps track of what nodes have already received the block
         :param current_url: the node's current url passed in from the server instance
+        :var chain_dict: self.chain in dict format
         :return:
         '''
+        chain_dict = {}
+        for i, block in self.chain:
+            chain_dict[i] = block.__dict__
         seen_nodes = []
         seen_nodes.append(current_url)
         current_instance = current_url.split("//")[1] # get ngrok url regardless of http or https
@@ -97,14 +101,14 @@ class Node:
             if random_node not in seen_nodes:
                 try:
                     if requests.get(random_node).status_code == 200:
-                        requests.post(random_node + "/recieve_chain", json=self.chain.__dict__)
+                        requests.post(random_node + "/recieve_chain", json=chain_dict)
                         seen_nodes.append(random_node)
                 except (ConnectionRefusedError,
                         requests.exceptions.ConnectionError,
                         requests.exceptions.MissingSchema):
                     seen_nodes.append(random_node)
 
-    def proof_of_work(self, block, url):
+    def proof_of_work(self, block):
         '''
         Used as our method of consensus, requires any given node to perform a heavily computational
         task before being able to add a block to the blockchain. ensures that no single
