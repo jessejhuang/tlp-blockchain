@@ -33,27 +33,21 @@ def receive_block():
                       new_block_data['block']['amount']
                      )
     node.add_block(new_block, db.get_own_address())
-    node.share_block(new_block, new_block_data, db.get_own_address())
     return jsonify(success=True)
 
-@interface.route('/halt', methods=['POST'])
-def update_chain():
+@interface.route('/recieve_chain', methods=['POST'])
+def receive_chain():
     '''
-    allows node to receive validated block from other nodes
+    Another node sends its ledger; decide whether to adopt the change
     '''
-    node = db.get_node()
-    new_block_data = request.get_json()
-    new_block = Block(node.last_hash,
-                      new_block_data['check_number'],
-                      new_block_data['sender'],
-                      new_block_data['recipient'],
-                      new_block_data['amount']
-                     )
-    node.chain.append(json.dumps(new_block.__dict__))
-    data = '''New Block added to chain: Sender: {}\nRecipient: {}\nAmount: {}'''\
-        .format(
-            str(new_block_data['sender']),
-            str(new_block_data['recipient']),
-            new_block_data['amount']
-        )
-    return data
+    # node = db.get_node()
+    new_chain_data = request.get_json()
+    # new_block = Block(node.last_hash,
+    #                   new_block_data['check_number'],
+    #                   new_block_data['sender'],
+    #                   new_block_data['recipient'],
+    #                   new_block_data['amount']
+    #                  )
+    print(new_chain_data)
+    print('new chain type: ', type(new_chain_data))
+    return new_chain_data
