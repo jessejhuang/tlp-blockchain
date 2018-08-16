@@ -12,6 +12,9 @@ Apologies if this is redundant or unneccesary, but if you haven't worked with vi
 
 I've added a simple example test, and you can run all tests on your local machine with the command "pytest". To display test code coverage, run pytest --cov src from citi-blockchain-project/
 
+NOTE 1: On Windows, instead of "source venv/bin/activate", run "source venv/Scripts/activate"
+NOTE 2: If "source venv/bin/activate" doesn't work on your Linux build, try ". venv/bin/activate"
+
 
 ### DATA FORMAT INFO:
 
